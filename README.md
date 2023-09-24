@@ -41,3 +41,6 @@ My programs for my Data Structures Laboratory course in Semester 3
 	2. Run the Tasks: delete the task at start of the queue and run it for the given taskDuration. (Use delay() function to suspend the running of the program for the indicated time). Once the task is completed prompt the user the menu and continue based on his choice.
 	3. Display the details of tasks that are queued up.
 
+## Experiment 4: LINKED LIST IMPLEMENTATION OF STACK AND QUEUE
+	1. Develop a C program to implement Queues using Linked List
+	2. Develop a C program to implement Stacks using Linked List and use the same to convert a postfix expression to its equivalent infix expression.
