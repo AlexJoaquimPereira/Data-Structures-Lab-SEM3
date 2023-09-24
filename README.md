@@ -44,3 +44,10 @@ My programs for my Data Structures Laboratory course in Semester 3
 ## Experiment 4: LINKED LIST IMPLEMENTATION OF STACK AND QUEUE
 	1. Develop a C program to implement Queues using Linked List
 	2. Develop a C program to implement Stacks using Linked List and use the same to convert a postfix expression to its equivalent infix expression.
+
+## Experiment 5: DOUBLY LINKED LIST AND CIRCULAR SINGLY LINKED LIST
+	Develop a C program to implement the following
+	1. Implement a doubly linked list(add, delete, reverse)
+	2. Swap the adjacent elements of doubly linked list by rearranging the links.
+	3. Create a doubly linked list in which the info part of each node contains a digit of a given number. The digits should be stored in reverse order. i.e., the least significant digit should be stored in the first node and the most significant digit should be stored in the last node.Example: If number entered in 5679 the list should be 9 -&gt; 7 -&gt;6 -&gt; 5. Write a function to add two numbers using the above linked list representation.
+	4. Delete alternate nodes from a circular singly linked list
