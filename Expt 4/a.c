@@ -76,9 +76,11 @@ int main(){
 				printf("\nEnter the element to insert: ");
 				scanf("%d", &data);
 				insert(data);
+				display();
 				break;
 			case 2:
 				delete();
+				display();
 				break;
 			case 3:
 				display();
