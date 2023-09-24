@@ -2,9 +2,8 @@
 #include<stdlib.h>
 
 struct node{
-	struct node *prev;
 	int info;
-	struct node *next;
+	struct node *link;
 };
 
 struct node * addtoempty(struct node *, int);
@@ -13,79 +12,76 @@ struct node * create(struct node *);
 struct node * delete(struct node *);
 void display(struct node*);
 
-struct node * addtoempty(struct node *start, int data){
+struct node * addtoempty(struct node *last, int data){
 	struct node *temp = (struct node*)malloc(sizeof(struct node));
 	temp->info = data;
-	temp->next = NULL;
-	temp->prev = NULL;
-	start = temp;
-	return start;
+	last = temp;
+	last->link = last;
+	return last;
 }
 
-struct node * addatend(struct node *start, int data){
-	struct node *p = start, *temp;
+struct node * addatend(struct node *last, int data){
+	struct node *temp;
 	temp = (struct node*)malloc(sizeof(struct node));
 	temp->info = data;
-	temp->next = NULL;
-	while(p->next != NULL)
-		p = p->next;
-	temp->prev = p;
-	p->next = temp;
-	return start;
+	temp->link = last->link;
+	last->link = temp;
+	last = temp;
+	return last;
 }
 
-struct node * create(struct node *start){
+struct node * create(struct node *last){
 	int n, data;
 	printf("Enter number of nodes: ");
 	scanf("%d", &n);
 	if(n == 0)
-		return start;
+		return last;
 	printf("Enter data: ");
 	scanf("%d", &data);
-	start = addtoempty(start, data);
+	last = addtoempty(last, data);
 	for(int i = 1; i < n; i++){
 		printf("Enter data: ");
 		scanf("%d", &data);
-		start = addatend(start, data);
+		last = addatend(last, data);
 	}	
-	return start;
+	return last;
 }
 
-struct node * delete(struct node *start){
-	struct node *temp;
-	temp = start->next;
-	while(temp->next != NULL){
-		temp->next->prev = temp->next;
-		temp->prev->next = temp->prev;
-		free(temp);
-		temp = temp->next->next;
-	}
-	if(temp->next == NULL){
-		temp->prev->next = NULL;
-		free(temp);
-	}
-	return start;
+struct node * delete(struct node *last){
+	if (last == NULL) {
+		printf("Empty list\n");
+        exit(1);
+    }
+    struct node* p = last;
+    struct node* temp;
+    do {
+        temp = p->link;
+        p->link = temp->link;
+        free(temp);
+        p = p->link;
+    } while (p!=last && p->link!=last);
+	return last;
 }
 
 
-void display(struct node *start){
-	struct node *p = start;
-	if(start == NULL){
+void display(struct node *last){
+	struct node *p = last->link;
+	if(last == NULL){
 		printf("Empty list\n");
 		return;
 	}
-	printf("List contents\n");
+	printf("List contents: ");
 	do{
 		printf(" %d", p->info);
-		p = p->next;
-	}while(p != NULL);
+		p = p->link;
+	}while(p != last->link);
 }
 
 int main(){
-	struct node *start = NULL;
+	struct node *last = NULL;
 	printf("Fill the list\n");
-	start = create(start);
+	last = create(last);
 	printf("Editing the list...\n");
-	start = delete(start);
-	display(start);
+	last = delete(last);
+	display(last);
 }

@@ -146,7 +146,6 @@ struct node * delete(struct node *start, int item){
 
 struct node * reverse(struct node *start){
 	struct node *p = start, *q = start->next;
-	
 	p->prev = q;
 	p->next = NULL;
 	while(q != NULL){
@@ -189,29 +188,36 @@ int main(){
 		scanf("%d", &s);
 		switch(s){
 			case 1:	start = create(start);
+					display(start);
 					break;
 			case 2: printf("Enter the data: ");
 					scanf("%d", &data);
 					start = addatbeg(start, data);
+					display(start);
 					break;
 			case 3: printf("Enter the data: ");
 					scanf("%d", &data);
 					start = addatend(start, data);
+					display(start);
 					break;
 			case 4: printf("Enter the data and item: ");
 					scanf("%d %d", &data, &item);
 					start = addbefore(start, data, item);
+					display(start);
 					break;
 			case 5: printf("Enter the data and item: ");
 					scanf("%d %d", &data, &item);
 					start = addafter(start, data, item);
+					display(start);
 					break;
 			case 6: printf("Enter the item: ");
 					scanf("%d",&item);
 					start = delete(start, item);
+					display(start);
 					break;
 			case 7: start = reverse(start);
 					printf("The list is reversed\n");
+					display(start);
 					break;
 			case 8:	display(start);
 					break;

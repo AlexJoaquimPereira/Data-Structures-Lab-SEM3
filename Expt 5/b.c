@@ -51,16 +51,31 @@ struct node * create(struct node *start){
 	return start;
 }
 
-struct node * swap(struct node *start){
-	struct node *p = start, *q = start->next;
-	while (q != NULL){
-		q->prev = p->prev;
-		p->prev = q;
-		q->next = p;
-		p->next = q->next
-	}
-	return start;
+struct node * swap(struct node *start) {
+    struct node *p = start, *q = start->next;
+    while (p != NULL && q != NULL) {
+
+        p->next = q->next;
+        q->prev = p->prev;
+        p->prev = q;
+        q->next = p;
+        if (p->next != NULL) {
+            p->next->prev = p;
+        }
+        if (q->prev != NULL) {
+            q->prev->next = q;
+        }
+        if (start == p) {
+            start = q;
+        }
+        p = p->next;
+        if (p != NULL) {
+            q = p->next;
+        }
+    } 
+    return start;
 }
+
 
 void display(struct node *start){
 	struct node *p = start;
@@ -73,5 +88,15 @@ void display(struct node *start){
 		printf(" %d", p->info);
 		p = p->next;
 	}while(p != NULL);
+	printf("\n");
 }
 
+int main(){
+	struct node *start = NULL;
+	printf("Fill the list\n");
+	start = create(start);
+	display(start);
+	printf("Editing the list....\n");
+	start = swap(start);
+	display(start);
+}
