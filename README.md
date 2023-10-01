@@ -51,3 +51,10 @@ My programs for my Data Structures Laboratory course in Semester 3
 	2. Swap the adjacent elements of doubly linked list by rearranging the links.
 	3. Create a doubly linked list in which the info part of each node contains a digit of a given number. The digits should be stored in reverse order. i.e., the least significant digit should be stored in the first node and the most significant digit should be stored in the last node.Example: If number entered in 5679 the list should be 9 -&gt; 7 -&gt;6 -&gt; 5. Write a function to add two numbers using the above linked list representation.
 	4. Delete alternate nodes from a circular singly linked list
+
+## Experiment 6: BINARY TREES
+	Develop a C program to create a binary tree given its Inorder and Postorder traversal.
+	Provide options to the user to perform the following operations on the binary tree:
+	1. Display the height of the tree
+	2. Return the depth of a given node in a tree
+	3. Perform Level order traversal
