@@ -9,7 +9,6 @@ struct node{
 void insert(int);
 void delete();
 void display();
-int peek();
 int isempty();
 
 int isempty(){
@@ -58,9 +57,8 @@ void display(){
 		printf("%d ", p->info);
 		p = p->link;
 	}
+	printf("\n");
 }
-
-
 
 int main(){
 	int s, data;
@@ -73,7 +71,7 @@ int main(){
 		scanf("%d", &s);
 		switch(s){
 			case 1:
-				printf("\nEnter the element to insert: ");
+				printf("Enter the element to insert: ");
 				scanf("%d", &data);
 				insert(data);
 				display();

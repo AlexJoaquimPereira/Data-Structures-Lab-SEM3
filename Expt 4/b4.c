@@ -56,6 +56,7 @@ void postfixToInfix() {
 int main() {
     printf("Enter a postfix expression: ");
     scanf("%s", postfix);
+    printf("Char\tStack\tInfix\n");
     postfixToInfix();
     printf("Infix expression: %s\n", infix);
     free(infix);
