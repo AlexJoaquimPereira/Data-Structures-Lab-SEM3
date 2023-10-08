@@ -14,6 +14,8 @@ struct node * search (struct node *, int);
 void inorder (struct node *);
 void preorder (struct node *);
 void postorder (struct node *);
+int minimum(struct node *);
+int maximum(struct node *);
 
 struct node * insert (struct node * ptr, int ikey){
 	if(ptr == NULL){
@@ -36,14 +38,14 @@ struct node * insert (struct node * ptr, int ikey){
 struct node * delete (struct node * ptr, int dkey){
 	struct node *succ, *temp;
 	if(ptr == NULL){
-		printf("Element not found\n");//OR empty tree
+		printf("Element not found\n");
 		return ptr;
 	}
 	if(dkey < ptr->info)
 		ptr->lchild = delete(ptr->lchild, dkey);
 	else if(dkey > ptr->info)
 		ptr->rchild = delete(ptr->rchild, dkey);
-	else { //i am doubting from this onwards
+	else {
 		if(ptr->lchild != NULL && ptr->rchild != NULL){
 			succ = succ->rchild;
 			while(succ->lchild!= NULL)
@@ -89,29 +91,63 @@ void postorder (struct node * ptr){
 	printf("%d ", ptr->info);
 }
 
+int minimum(struct node* ptr){
+    while (ptr->lchild != NULL)
+        ptr = ptr->lchild;
+    return ptr->info;
+}
+
+int maximum(struct node* ptr) {
+    while (ptr->rchild != NULL)
+        ptr = ptr->rchild;
+    return ptr->info;
+}
+
+struct node* search(struct node* ptr, int skey){
+    if (ptr == NULL || ptr->info == skey)
+        return ptr;
+    else if (skey < ptr->info)
+        return search(ptr->lchild, skey);
+    else return search(ptr->rchild, skey);
+}
+
 int main(){
-	struct node * root = NULL;
-	int k;
-	for(int i = 0; i < 10; i++){
-		printf("Insert: ");
-		scanf("%d", &k);
-		root = insert(root, k);
-	}
-	inorder(root);
-	printf("\n");
-	preorder(root);
-	printf("\n");
-	postorder(root);
-	printf("\n");
-	for(int i = 0; i < 10; i++){
-		printf("Delete: ");
-		scanf("%d", &k);
-		root = delete(root, k);
-	}
-	inorder(root);
-	printf("\n");
-	preorder(root);
-	printf("\n");
-	postorder(root);
-	printf("\n");
+	struct node * root = NULL, *seek = NULL;
+	int k, s, c;
+	do{
+		printf("\n1. Insertion of a new element\n"
+				"2. Deletion of an existing element\n"
+				"3. Searching for a given element\n"
+				"4. Perform in order, pre order and post order traversals\n"
+				"5. Find the maximum and minimum value\n"
+				"6. Exit\n");
+		printf("Enter your option: ");
+		scanf("%d", &s);
+		switch(s){
+			case 1: printf("Insert: ");
+					scanf("%d", &k);
+					root = insert(root, k);
+					break;
+			case 2: printf("Delete: ");
+					scanf("%d", &k);
+					root = delete(root, k);
+					break;
+			case 3: printf("Enter the element: ");
+					scanf("%d", &c);
+					seek = search(root, c);
+					if(seek == NULL)
+						printf("Element not found\n");
+					else printf("Element found\n");
+					break;
+			case 4: printf("Inorder: "); inorder(root);
+					printf("\nPreorder: "); preorder(root);
+					printf("\nPostorder: "); postorder(root);
+					break;
+			case 5: printf("Minimum: %d\n", minimum(root));
+					printf("Maximum: %d\n", maximum(root));
+					break;
+			case 6: break;
+			default: printf("Invalid input\n");
+		}
+	}while(s != 6);
 }
