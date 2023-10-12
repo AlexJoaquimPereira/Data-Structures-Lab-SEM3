@@ -229,8 +229,57 @@ void postorder(struct node * root){
 	}
 }
 
+struct node* search(struct node* ptr, int skey){
+    while(ptr->lthread == true && ptr->rthread == true){
+		if(ptr->info == skey)
+			return ptr;
+		else if(ptr->info > skey)
+			ptr = ptr->rchild;
+		else ptr = ptr->lchild;
+	}
+	printf("Element not found\n");
+	return NULL;
+}
+
 int main(){
 	struct node *root = NULL;
 	int s;
-
+	char c;
+	printf("Do you want to insert many elements? y/n: ");
+	scanf("%c", &c);
+	if(c == 'y')
+	// add for loop
+	do{
+		printf("\n1. Insertion of a new element\n"
+				"2. Deletion of an existing element\n"
+				"3. Searching for a given element\n"
+				"4. Perform inorder, preorder and postorder traversals\n"
+				"5. Exit\n");
+		printf("Enter your option: ");
+		scanf("%d", &s);
+		switch(s){
+			case 1: printf("Insert: ");
+					scanf("%d", &k);
+					root = insert(root, k);
+					break;
+			case 2: printf("Delete: ");
+					scanf("%d", &k);
+					root = delete(root, k);
+					break;
+			case 3: printf("Enter the element: ");
+					scanf("%d", &c);
+					seek = search(root, c);
+					if(seek == NULL)
+						printf("Element not found\n");
+					else printf("Element found\n");
+					break;
+			case 4: printf("Inorder: "); inorder(root);
+					printf("\nPreorder: "); preorder(root);
+					printf("\nPostorder: "); postorder(root);
+					break;
+			
+			case 5: break;
+			default: printf("Invalid input\n");
+		}
+	}while(s != 6);
 }
