@@ -53,16 +53,16 @@ struct node * delete (struct node * ptr, int dkey){
 			ptr->info = succ->info;
 			ptr->rchild = delete(ptr->rchild, succ->info);
 		}
-	else{
-		temp = ptr;
-		if(ptr->lchild != NULL)
-			ptr = ptr->lchild;
-		else if(ptr->rchild != NULL)
-			ptr = ptr->rchild;
-		else ptr = NULL;
-		free (temp);
-		printf("%d deleted\n", dkey);
-	}
+		else{
+			temp = ptr;
+			if(ptr->lchild != NULL)
+				ptr = ptr->lchild;
+			else if(ptr->rchild != NULL)
+				ptr = ptr->rchild;
+			else ptr = NULL;
+			free (temp);
+			printf("%d deleted\n", dkey);
+		}
 	}
 	return ptr;
 }
@@ -113,7 +113,19 @@ struct node* search(struct node* ptr, int skey){
 
 int main(){
 	struct node * root = NULL, *seek = NULL;
-	int k, s, c;
+	int key, s, c, n;
+	char b;
+	printf("Do you want to insert many elements? (y/n): ");
+	scanf("%c", &b);
+	if(b == 'y'){
+		printf("Enter number of elements to insert: ");
+		scanf("%d", &n);
+		for(int i = 0; i < n; i++){
+			printf("Insert: ");
+			scanf("%d", &key);
+			root = insert(root, key);
+		}
+	}
 	do{
 		printf("\n1. Insertion of a new element\n"
 				"2. Deletion of an existing element\n"
@@ -125,16 +137,16 @@ int main(){
 		scanf("%d", &s);
 		switch(s){
 			case 1: printf("Insert: ");
-					scanf("%d", &k);
-					root = insert(root, k);
+					scanf("%d", &key);
+					root = insert(root, key);
 					break;
 			case 2: printf("Delete: ");
-					scanf("%d", &k);
-					root = delete(root, k);
+					scanf("%d", &key);
+					root = delete(root, key);
 					break;
 			case 3: printf("Enter the element: ");
-					scanf("%d", &c);
-					seek = search(root, c);
+					scanf("%d", &key);
+					seek = search(root, key);
 					if(seek == NULL)
 						printf("Element not found\n");
 					else printf("Element found\n");
@@ -142,6 +154,7 @@ int main(){
 			case 4: printf("Inorder: "); inorder(root);
 					printf("\nPreorder: "); preorder(root);
 					printf("\nPostorder: "); postorder(root);
+					printf("\n");
 					break;
 			case 5: printf("Minimum: %d\n", minimum(root));
 					printf("Maximum: %d\n", maximum(root));
