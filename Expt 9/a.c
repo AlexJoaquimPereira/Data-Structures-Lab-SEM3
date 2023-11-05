@@ -256,17 +256,17 @@ struct node *delete(struct node * pptr,int dkey){
     static int shorter;
     if(pptr==NULL){
         printf("Key not present\n");
-        shorter=FALSE;
+        shorter = FALSE;
         return pptr;
     }
     if(dkey<pptr->info){
-        pptr->lchild=del(pptr->lchild,dkey);
+        pptr->lchild=delete(pptr->lchild,dkey);
         if(shorter==TRUE){
             pptr=del_left_check(pptr,&shorter);
         }
     }
     else if(dkey>pptr->info){
-        pptr->rchild=del(pptr->rchild,dkey);
+        pptr->rchild = delete(pptr->rchild,dkey);
         if(shorter==TRUE){
             pptr=del_right_check(pptr,&shorter);
         }
@@ -277,7 +277,7 @@ struct node *delete(struct node * pptr,int dkey){
             while(succ->lchild)
                 succ=succ->lchild;
             pptr->info=succ->info;
-            pptr->rchild=del(pptr->rchild,succ->info);
+            pptr->rchild=delete(pptr->rchild,succ->info);
             if(shorter==TRUE)
                 pptr=del_right_check(pptr,&shorter);
         }
@@ -297,7 +297,7 @@ struct node *delete(struct node * pptr,int dkey){
 }
 
 void search(struct node *ptr, int skey){
-    static int found=0;
+    static int found = 0;
     if(ptr == NULL){
         printf("Element not found\n");
         return;
@@ -316,14 +316,14 @@ void minimum(struct node *ptr){
     if(ptr!=NULL)
         while(ptr->lchild!=NULL)
             ptr=ptr->lchild;
-    printf("Minimum element is : %d",ptr->info);
+    printf("Minimum element is : %d\n",ptr->info);
 }
 
 void maximum(struct node *ptr){
     if(ptr!=NULL)
         while(ptr->rchild!=NULL)
             ptr=ptr->rchild;
-    printf("Maximum element is : %d",ptr->info);
+    printf("Maximum element is : %d\n",ptr->info);
 }
 
 int main(){
@@ -350,10 +350,10 @@ int main(){
                     scanf("%d", &key);
                     search(root, key);
                     break;
-            case 4: minimum(key);
-                    maximum(key);
+            case 4: minimum(root);
+                    maximum(root);
                     break;
-            case 6: break;
+            case 5: break;
             default: printf("Invalid input\n");
         }
     }while(s != 6);
