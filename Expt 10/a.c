@@ -2,7 +2,8 @@
 #include <stdlib.h>
 #define MAX 100
 
-int n;
+int n = 8;
+int max_edges = 12;
 int graph[MAX][MAX];
 
 typedef enum {initial, waiting, visited, finished} State;
@@ -14,8 +15,8 @@ int front = -1;
 int rear = -1;
 int cqueue[MAX];
 
-void insert_graph();
-void insert();
+void insert_graph(int, int);
+void insert(int, int);
 void BFS(int);
 void BFS_traversal();
 void DFS(int);
@@ -126,11 +127,32 @@ void DFS(int v){
 	}
 }
 
+void display_graph(){
+	int outsum, insum[n];
+	printf("   ");
+	for(int i = 1; i <= n; i++)
+		printf("%3d", i);
+	printf("Out\n");
+	for(int i = 0; i < n; i++){
+		outsum = 0, insum[i] = 0;
+		printf("%3d", i+1);
+		for(int j = 0; j < n; j++){
+			printf("%3d", graph[i][j]);
+			outsum += graph[i][j];
+			insum[i] += graph[j][i];
+		}
+		printf("%3d", outsum);
+		printf("\n");
+	}
+	printf(" In");
+	for(int i = 0; i < n; i++)
+		printf("%3d", insum[i]);
+}
+ 
 int main(){
 	int org, dest;
-	printf("Number of vertices: ");
-	scanf("%d", &n);
-	int max_edges = n *(n - 1) / 2;
+	printf("Number of vertices: %d\n", n);
+	printf("Maximum number of edges = %d\n", max_edges);
 	printf("Fill the graph: Enter (-1, -1) to break\n");
 	for(int i = 1; i <= max_edges; i++){
 		printf("Enter edge %d: ", i);
@@ -141,14 +163,15 @@ int main(){
 			printf("Invalid edge\n");
 			i--;
 		}
-		insert_graph(org, dest);
+		graph[org][dest] = 1;
 	}
 	int s, vertex;
 	do{
-		printf("\n1. Enter a vertex\n");
+		printf("\n1. Enter an edge\n");
 		printf("2. Perform Breadth First Search\n");
 		printf("3. Perform Depth First Search\n");
-		printf("4. Exit\n");
+		printf("4. Display the graph\n");
+		printf("5. Exit\n");
 		printf("Enter your choice: ");
 		scanf("%d", &s);
 		switch(s){
@@ -164,9 +187,11 @@ int main(){
 					scanf("%d", &vertex);
 					DFS(vertex);
 					break;
-			case 4: break;
+			case 4: display_graph();
+					break;
+			case 5: break;
 			default: printf("Invalid input\n");
 		}
-	}while(s != 4);
+	}while(s != 5);
 	return 0;
 }
