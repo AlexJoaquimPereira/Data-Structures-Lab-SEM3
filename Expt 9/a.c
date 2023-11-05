@@ -26,36 +26,6 @@ struct node *LeftRotation(struct node *pptr){
     return aptr;
 }
 
-struct node *insert_rightbalance(struct node *pptr){
-    struct node *aptr, *bptr;
-    aptr = pptr->lchild;
-    if (aptr->balance == -1){
-        pptr->balance = 0;
-        aptr->balance = 0;
-        pptr = RightRotation(pptr);
-    }
-    else{
-        bptr = aptr->rchild;
-        switch (bptr->balance){
-            case -1:
-                pptr->balance = 1;
-                aptr->balance = 0;
-                break;
-            case 1:
-                pptr->balance = 0;
-                aptr->balance = -1;
-                break;
-            case 0:
-                pptr->balance = 0;
-                aptr->balance = 0;
-        }
-        bptr->balance = 0;
-        pptr->lchild = RightRotation(aptr);
-        pptr = LeftRotation(pptr);
-    }
-    return pptr;
-}
-
 struct node *insert_leftbalance(struct node *pptr){
     struct node *aptr, *bptr;
     aptr = pptr->lchild;
@@ -80,11 +50,42 @@ struct node *insert_leftbalance(struct node *pptr){
                 aptr->balance = 0;
         }
         bptr->balance = 0;
-        pptr->lchild = LeftRotation(aptr);
+        pptr->lchild = LeftRotation(pptr->lchild);
         pptr = RightRotation(pptr);
     }
     return pptr;
 }
+
+struct node *insert_rightbalance(struct node *pptr){
+    struct node *aptr, *bptr;
+    aptr = pptr->rchild;
+    if (aptr->balance == -1){
+        pptr->balance = 0;
+        aptr->balance = 0;
+        pptr = LeftRotation(pptr);
+    }
+    else{
+        bptr = aptr->lchild;
+        switch (bptr->balance){
+            case -1:
+                pptr->balance = 1;
+                aptr->balance = 0;
+                break;
+            case 1:
+                pptr->balance = 0;
+                aptr->balance = -1;
+                break;
+            case 0:
+                pptr->balance = 0;
+                aptr->balance = 0;
+        }
+        bptr->balance = 0;
+        pptr->rchild = RightRotation(pptr->rchild);
+        pptr = LeftRotation(pptr);
+    }
+    return pptr;
+}
+
 
 struct node *insert_left_check(struct node *pptr, int *ptaller){
     switch (pptr->balance){
@@ -145,7 +146,7 @@ struct node *insert(struct node *pptr, int ikey){
     return pptr;
 }
 
-struct node*del_rightbalance(struct node *pptr,int *pshorter){
+struct node* del_rightbalance(struct node *pptr,int *pshorter){
     struct node *bptr,*aptr;
     aptr=pptr->rchild;
     if(aptr->balance==0){
@@ -176,8 +177,8 @@ struct node*del_rightbalance(struct node *pptr,int *pshorter){
                 break;
         }
         bptr->balance=0;
-        pptr->lchild=RightRotation(aptr);
-        pptr=LeftRotation(pptr);
+        pptr->rchild = LeftRotation(aptr); 
+        pptr=RightRotation(pptr);
     }
     return pptr;
 }
@@ -229,8 +230,8 @@ struct node* del_leftbalance(struct node *pptr, int *pshorter){
                 break;
         }
         bptr->balance = 0;
-        pptr->lchild = LeftRotation(aptr);
-        pptr = RightRotation(pptr);
+        pptr->rchild = RightRotation(aptr);
+        pptr = LeftRotation(pptr);
     }
     return pptr;
 }
@@ -251,10 +252,10 @@ struct node *del_right_check(struct node *pptr, int *pshorter){
     return pptr;
 }
 
-struct node *delete(struct node * pptr,int dkey){
+struct node *delete(struct node * pptr, int dkey){
     struct node * tmp, * succ;
     static int shorter;
-    if(pptr==NULL){
+    if(pptr == NULL){
         printf("Key not present\n");
         shorter = FALSE;
         return pptr;
@@ -356,6 +357,6 @@ int main(){
             case 5: break;
             default: printf("Invalid input\n");
         }
-    }while(s != 6);
+    }while(s != 5);
     return 0;
 }
