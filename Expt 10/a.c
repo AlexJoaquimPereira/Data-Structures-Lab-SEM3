@@ -6,19 +6,18 @@ int n = 8;
 int max_edges = 12;
 int graph[MAX][MAX];
 
-typedef enum {initial, waiting, visited, finished} State;
+enum State {initial, waiting, visited, finished};
 int time = 0;
 int d[MAX], f[MAX];
-State state[MAX];
+enum State state[MAX];
 
 int front = -1;
 int rear = -1;
 int cqueue[MAX];
 
 void insert_graph(int, int);
-void insert(int, int);
 void BFS(int);
-void BFS_traversal();
+void BFS_traversal(int v);
 void DFS(int);
 void display_graph();
 
@@ -28,33 +27,30 @@ int delete_queue();
 void display_queue();
 
 int isempty(){
-	if(front == -1)
+	if(front == -1 || front == rear + 1)
 		return 1;
 	else return 0;
 }
 
 void insert_queue(int item){
-	if(front == (rear+1) % MAX){
+	if(rear == MAX){
 		printf("Overflow\n");
-		exit(1);
+		return;
 	}
 	if(front == -1)
 		front = 0;
-	rear = (rear + 1) % MAX;
+	rear = rear + 1;
 	cqueue[rear] = item;	
 }
 
 int delete_queue(){
 	int item;
 	if(isempty()){
-		printf("Underflow\b");
+		printf("Underflow\n");
 		exit(1);
 	}
 	item = cqueue[front];
-	if(front == rear)
-		front = -1, rear= -1;
-	if(front == MAX - 1)
-		front = (front + 1) % MAX;
+	front++;
 	return item;		
 }
 
@@ -63,15 +59,8 @@ void display_queue(){
 		printf("Underflow\n");
 		return;
 	}
-	int i = front;
-	if(front <= rear)
-		while(i <= rear)
-			printf(" %d", cqueue[i++]);
-	else
-		while(i <= MAX-1)
-			printf(" %d", cqueue[i++]);
-	for(i = 0; i <= rear; i++)
-		printf(" %d", cqueue[i]);
+	for(int i = front; i <= rear; i++)
+		printf("%d ", cqueue[i]);
 }
 
 void insert_graph(int org, int dest){
@@ -86,12 +75,10 @@ void insert_graph(int org, int dest){
 	graph[org][dest] = 1;
 }
 
-void BFS_traversal(){
-	int v;
+void BFS_traversal(int v){
 	for(v = 0; v < n; v++)
 		state[v] = initial;
-	printf("Enter start vertex: ");
-	scanf("%d", &v);
+	printf("Element\tQueue\n");
 	BFS(v);
 	for(v = 0; v < n; v++)
 		if(state[v] == initial)
@@ -101,10 +88,11 @@ void BFS_traversal(){
 void BFS(int v){
 	insert_queue(v);
 	state[v] = waiting;
-	while(!isempty()){
+	while(isempty() == 0){
 		v = delete_queue();
 		state[v] = visited;
-		printf(" %d ", v);
+		printf("%d\t", v);
+		display_queue();
 		for(int i = 0; i < n; i++){
 			if(graph[v][i] == 1 && state[i] == initial){
 				insert_queue(i);
@@ -115,10 +103,11 @@ void BFS(int v){
 }
 
 void DFS(int v){
+	int i;
 	time++;
 	d[v] = time;
 	state[v] = visited;
-	printf(" %d ", v);
+	printf("%d\t%d\n", v, d[v]);
 	for(int i = 0; i < n; i++){
 		if(graph[v][i] == 1 && state[i] == initial)
 			DFS(i);
@@ -181,10 +170,11 @@ int main(){
 					break;
 			case 2: printf("Enter vertex: ");
 					scanf("%d", &vertex);
-					BFS(vertex);
+					BFS_traversal(vertex);
 					break;
 			case 3: printf("Enter vertex: ");
 					scanf("%d", &vertex);
+					printf("Element\tTime\n");
 					DFS(vertex);
 					break;
 			case 4: display_graph();
