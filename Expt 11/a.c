@@ -9,9 +9,6 @@ struct employee{
 	char empaddr[50];
 };
 
-int linear_search(struct employee [], int, int);
-int binary_search(struct employee [], int, int);
-
 int linear_search(struct employee arr[], int n, int item){
 	int i = 0;
 	while(i < n && item != arr[i].empid)
@@ -21,7 +18,7 @@ int linear_search(struct employee arr[], int n, int item){
 	else return -1;
 }
 
-int binary_search(struct employee [], int n, int item){
+int binary_search(struct employee arr[], int n, int item){
 	int low = 0, high = n - 1, mid;
 	while(low <= high){
 		mid = (low + high) / 2;
@@ -35,15 +32,14 @@ int binary_search(struct employee [], int n, int item){
 }
 
 int main(){
-	struct employee *arr;
+	struct employee arr[MAX];
 	int n, s, item;
 	printf("Enter number of employees: ");
 	scanf("%d", &n);
-	arr = (struct employee *)malloc(n * sizeof(struct employee));
 	printf("Enter the employee details:\n");
 	for(int i = 0; i < n; i++){
-		printf("Employee %d\n:", i+1);
-		printf("ID: "):
+		printf("Employee %d:\n", i+1);
+		printf("ID: ");
 		scanf("%d", &arr[i].empid);
 		printf("Name: ");
 		scanf("%s", arr[i].empname);
@@ -63,17 +59,17 @@ int main(){
 					item = linear_search(arr, n, item);
 					if(item == -1)
 						printf("Item not found\n");
-					else printf("Item found at %dth location", item);
+					else printf("Item found at %dth location\n", item);
 					break;
 			case 2: printf("Enter the ID: ");
 					scanf("%d", &item);
 					item = binary_search(arr, n, item);
 					if(item == -1)
 						printf("Item not found\n");
-					else printf("Item found at %dth location", item);
+					else printf("Item found at %dth location\n", item);
 					break;
 			case 3: break;
 			case 4: printf("Invalid input\n");
 		}
-	}while(s != 4);
+	}while(s != 3);
 }
