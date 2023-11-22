@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+struct vertex;
 struct edge{
 	struct vertex *destvertex;
 	struct edge *nextedge;
@@ -32,7 +33,7 @@ struct vertex * findvertex(int u){
 	struct vertex *ptr;
 	ptr = start;
 	while(ptr != NULL){
-		if(ptr->info == u);
+		if(ptr->info == u)
 			return ptr;
 		ptr = ptr->nextvertex;
 	}
@@ -175,10 +176,11 @@ void display(){
 
  
 int main(){
-	int org, dest, n;
-	printf("Number of vertices: ");
-	scanf("%d", &n);
-	int max_edges = n *(n - 1) / 2;
+	int org, dest, n = 8;
+	printf("Number of vertices: %d\n", n);
+	int max_edges = 12;
+	for(int i = 0; i < n; i++)
+        insert(i);
 	printf("Fill the graph: Enter (-1, -1) to break\n");
 	for(int i = 1; i <= max_edges; i++){
 		printf("Enter edge %d: ", i);
@@ -206,12 +208,12 @@ int main(){
 					insertedge(org, dest);
 					break;
 			case 2: printf("Enter edge: ");
-					scanf("%d", &edge);
-					delete_incoming_edges(edge);
+					scanf("%d %d", &org, &dest);
+					delete_edge(org, dest);
 					break;
 			case 3: printf("Enter vertex: ");
 					scanf("%d", &vertex);
-					deletevertex(vertex);
+					delete_vertex(vertex);
 					break;
 			case 4: display();
 					break;
