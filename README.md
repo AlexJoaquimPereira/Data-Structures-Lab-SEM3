@@ -58,3 +58,52 @@ My programs for my Data Structures Laboratory course in Semester 3
 	1. Display the height of the tree
 	2. Return the depth of a given node in a tree
 	3. Perform Level order traversal
+
+## Experiment 7: BINARY SEARCH TREES
+	Develop a C program to create a binary search tree and perform the following operations 
+	1. Insertion of a new element
+	2. Deletion of an existing element
+	3. Searching for a given element
+	4. Perform in order, pre order and post order traversals
+	5. Find the maximum and minimum value
+
+## Experiment 8: THREADED BINARY SEARCH TREES
+	Develop a C program to create a Threaded Binary Search tree.
+	Provide options to the user to perform the following operations on the binary tree:
+	1. Insertion of a new element
+	2. Deletion of an existing element
+	3. Searching for a given element
+	4. Performing inorder and preorder traversal on the tree.
+
+## Experiment 9: AVL (Adelson-Velsky and Landis) TREE
+	Develop a C program to create an AVL tree and perform the following operations 
+	1. Insertion of a new element
+	2. Deletion of an existing element
+	3. Searching for a given element
+	4. Find the maximum and minimum value
+
+## Experiment 10: GRAPHS
+	Develop a C program to implement a directed graph G = (V, E) having |V|=8 and |E|=12.
+	Perform the following operations on the graph using an adjacency matrix:
+	1. Display Breadth First Traversal
+	2. Display Depth First Traversal
+	Perform the following operations on the graph using an adjacency list:
+	1. Add a new vertex
+	2. Delete a vertex
+	3. Add a new edge
+	4. Delete an edge
+
+## Experiment 11: Hashing and Searching 
+	1. Implement linear search and binary search using an employee structure (structure should have id, name and address).
+	2. Implement hashing using following collision resolution techniques
+		• Linear Probing
+		• Quadratic probing
+		• Double hashing
+	3. Implement hashing using separate chaining
+
+## Experiment 12: SORTING
+	Develop a C program to implement the following sorting algorithms:
+	1. Insertion Sort using a character array
+	2. Merge Sort using a linked list
+	3. Quick Sort
+	4. Heap Sort
