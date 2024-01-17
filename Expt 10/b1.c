@@ -122,18 +122,6 @@ void delete_vertex(int u){
     }
 }
 
-void displayConnections(){
-    struct vertex *ptr = start;
-    while (ptr != NULL){
-        struct edge *q = ptr->firstedge;
-        while (q != NULL){
-            printf("Connection: %d -> %d\n", ptr->info, q->destvertex->info);
-            q = q->nextedge;
-        }
-        ptr = ptr->nextvertex;
-    }
-}
-
 void display(){
     struct vertex *ptr;
     struct edge *q;
@@ -151,7 +139,6 @@ void display(){
         printf("\n");
         ptr = ptr->nextvertex;
     }
-    //displayConnections();
 }
 
 int main(){
@@ -195,7 +182,6 @@ int main(){
 					delete_vertex(vertex);
 					break;
 			case 4: display();
-                    //displayConnections();
 					break;
 			case 5: break;
 			default: printf("Invalid input\n");

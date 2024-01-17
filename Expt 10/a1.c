@@ -12,24 +12,19 @@ int adj[MAX][MAX];
 int n = 8, max_edges = 12;
 int queue[MAX], front = -1, rear = -1;
 
-void insert_graph(int origin, int destin)
-{
-    if (origin < 0 || origin >= n)
-    {
+void insert_graph(int origin, int destin){
+    if (origin < 0 || origin >= n){
         printf("Origin vertex does not exist\n");
         return;
     }
-    if (destin < 0 || destin >= n)
-    {
+    if (destin < 0 || destin >= n){
         printf("Destination vertex does not exist\n");
         return;
     }
     adj[origin][destin] = 1;
 }
-void delete(int origin, int destin)
-{
-    if (origin >= n || destin >= n || origin < 0 || destin < 0 || adj[origin][destin] == 0)
-    {
+void delete(int origin, int destin){
+    if (origin >= n || destin >= n || origin < 0 || destin < 0 || adj[origin][destin] == 0){
         printf("The edge does not exist\n");
         return;
     }
@@ -56,75 +51,55 @@ void display(){
 	for(int i = 0; i < n; i++)
 		printf("%3d", insum[i]);
 }
-void addVertex()
-{
-    if (n >= MAX)
-    {
+void addVertex(){
+    if (n >= MAX){
         printf("Graph is full, cannot add more vertices\n");
         return;
     }
     n++;
     printf("Vertex %d added.\n", n - 1);
 }
-void insertq(int vertex)
-{
+void insertq(int vertex){
     if (rear == MAX - 1)
-    {
         printf("Queue overflow\n");
-    }
-    else
-    {
+    else{
         if (front == -1)
             front = 0;
         rear++;
         queue[rear] = vertex;
     }
 }
-int delq()
-{
+int delq(){
     int item;
     if (front == -1 || front > rear)
-    {
         printf("Queue Underflow\n");
-    }
-    else
-    {
+    else{
         item = queue[front];
         front++;
         return item;
     }
 }
-void displayQueue(int q[], int front, int rear)
-{
-    if (front == -1)
-    {
+void displayQueue(int q[], int front, int rear){
+    if (front == -1){
         printf("Queue is empty.\n");
         return;
     }
     printf("Queue: ");
     for (int i = front; i <= rear; i++)
-    {
         printf("%d ", q[i]);
-    }
     printf("\n");
 }
-void push(int v)
-{
+void push(int v){
     if (top == MAX - 1)
-    {
         printf("Stack overflow\n");
-    }
-    else
-    {
+    else{
         top = top + 1;
         stack[top] = v;
     }
 }
-int pop()
-{
+int pop(){
     int v;
-    if (top == -1)
-    {
+    if (top == -1){
         printf("Stack underflow\n");
         exit(1);
     }
@@ -132,48 +107,25 @@ int pop()
     top = top - 1;
     return v;
 }
-int isEmpty()
-{
+int isEmpty(){
     return top == -1;
 }
-void displayStackDFS(int s[], int top, int v)
-{
+void displayStackDFS(int s[], int top, int v){
     printf("Stack (DFS at vertex %d): ", v);
     for (int i = 0; i <= top; i++)
-    {
         printf("%d ", s[i]);
-    }
     printf("\n");
 }
-void DFS(int v)
-{
-    int i;
-    time++;
-    d[v] = time;
-    printf("%d\n", v);
-    state[v] = visited;
-    for (i = 0; i < n; i++)
-    {
-        if (adj[v][i] == 1 && state[i] == initial)
-            DFS(i);
-    }
-    state[v] = finished;
-    f[v] = ++time;
-}
-void DFS_stack(int v)
-{
+void DFS_stack(int v){
     int i;
     push(v);
-    while (top != -1)
-    {
+    while (top != -1){
         v = pop();
-        if (state[v] == initial)
-        {
+        if (state[v] == initial){
             printf("%d ", v);
             state[v] = visited;
         }
-        for (i = n - 1; i >= 0; i--)
-        {
+        for (i = n - 1; i >= 0; i--){
             if (adj[v][i] == 1 && state[i] == initial)
                 push(i);
         }
@@ -181,50 +133,32 @@ void DFS_stack(int v)
     }
     printf("\n");
 }
-void DF_Traversal()
-{
+void DF_Traversal(){
     int v;
     for (v = 0; v < n; v++)
         state[v] = initial;
-    printf("Enter starting vertex for Depth First Search : ");
+    printf("Enter vertex: ");
     scanf("%d", &v);
     DFS_stack(v);
     for (v = 0; v < n; v++)
         if (state[v] == initial)
             DFS_stack(v);
 }
-void recursiveDF_traversal()
-{
+
+void BFS_traversal(){
     int v;
     for (v = 0; v < n; v++)
         state[v] = initial;
-    printf("Enter starting vertex for Depth First Search : ");
-    scanf("%d", &v);
-    DFS(v);
-    for (v = 0; v < n; v++)
-        if (state[v] == initial)
-            DFS(v);
-}
-void BFS_traversal()
-{
-    int v;
-    for (v = 0; v < n; v++)
-    {
-        state[v] = initial;
-    }
-    printf("Enter starting vertex for BFS traversal: ");
+    printf("Enter vertex: ");
     scanf("%d", &v);
     insertq(v);
     state[v] = visited;
-    printf("BFS Traversal (Queue Operations):\n");
-    while (front != -1 && !(front > rear))
-    {
+    printf("Element\tQueue\n");
+    while (front != -1 && !(front > rear)){
         v = delq();
         printf("%d ", v);
-        for (int i = 0; i < n; i++)
-        {
-            if (adj[v][i] == 1 && state[i] == initial)
-            {
+        for (int i = 0; i < n; i++){
+            if (adj[v][i] == 1 && state[i] == initial){
                 insertq(i);
                 state[i] = visited;
             }
@@ -233,39 +167,24 @@ void BFS_traversal()
     }
     printf("\n");
 }
-void deleteVertex(int vertex)
-{
-    if (vertex < 0 || vertex >= n)
-    {
+void deleteVertex(int vertex){
+    if (vertex < 0 || vertex >= n){
         printf("Vertex does not exist\n");
         return;
     }
-    // Delete edges connected to the vertex
-    for (int i = 0; i < n; i++)
-    {
+    for (int i = 0; i < n; i++){
         if (adj[vertex][i] == 1)
-        {
             adj[vertex][i] = 0;
-        }
         if (adj[i][vertex] == 1)
-        {
             adj[i][vertex] = 0;
-        }
     }
-    // Shift remaining vertices to fill the gap
-    for (int i = vertex; i < n - 1; i++)
-    {
+    for (int i = vertex; i < n - 1; i++){
         for (int j = 0; j < n; j++)
-        {
             adj[i][j] = adj[i + 1][j];
-        }
     }
-    for (int i = vertex; i < n - 1; i++)
-    {
+    for (int i = vertex; i < n - 1; i++){
         for (int j = 0; j < n; j++)
-        {
             adj[j][i] = adj[j][i + 1];
-        }
     }
     n--;
     printf("Vertex %d deleted.\n");
@@ -302,8 +221,7 @@ int main(){
 					break;
 			case 2: BFS_traversal();
 					break;
-			case 3: printf("Element\tTime\n");
-					DFS_stack(vertex);
+			case 3: DF_Traversal(vertex);
 					break;
 			case 4: display();
 					break;
